@@ -9,7 +9,7 @@ The Sections of this repository are separated by stage:
     
    2. [SNP filtering for different analyses](../SNP_filtering)
     
-   3. Population genetic analyses
+   3. [Population genetic analyses](../population_genetic_analyses)
    
        1. Genetic diversity analyses
     
