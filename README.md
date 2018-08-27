@@ -1,7 +1,7 @@
 # Cacao_Genomics
 This repository contains all the necesasry scripts to reconstruct the data analysis from our work on the 200 Genomes in:
 
-###### Cornejo OE, Yee M-C, Adams A, Strandberg R, Livingston D, Stack C, Umaharan P, Royaert S, Tawari NR, Ng P, Gutierrez, O, Phillips W, Mockaitis K, Bustamante CD, Motamayor JC. Population genomic analyses of the chocolate tree, Theobroma cacao L., provide insights into the domestication process. (submitted Communications Biology). available in bioRXiv doi: https://doi.org/10.1101/223438
+##### Cornejo OE, Yee M-C, Adams A, Strandberg R, Livingston D, Stack C, Umaharan P, Royaert S, Tawari NR, Ng P, Gutierrez, O, Phillips W, Mockaitis K, Bustamante CD, Motamayor JC. Population genomic analyses of the chocolate tree, Theobroma cacao L., provide insights into the domestication process. (submitted Communications Biology). available in bioRXiv doi: https://doi.org/10.1101/223438
 
 The Sections of this repository are separated by stage: 
 
