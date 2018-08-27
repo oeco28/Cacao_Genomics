@@ -5,11 +5,11 @@ This repository contains all the necesasry scripts to reconstruct the data analy
 
 The Sections of this repository are separated by stage: 
 
-   1. [Raw reads processing, mapping and SNP identification](../processing_reads)
+   1. [Raw reads processing, mapping and SNP identification](./processing_reads)
     
-   2. [SNP filtering for different analyses](../SNP_filtering)
+   2. [SNP filtering for different analyses](./SNP_filtering)
     
-   3. [Population genetic analyses](../population_genetic_analyses)
+   3. [Population genetic analyses](./population_genetic_analyses)
    
        1. Genetic diversity analyses
     
