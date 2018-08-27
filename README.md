@@ -5,7 +5,7 @@ This repository contains all the necesasry scripts to reconstruct the data analy
 
 The Sections of this repository are separated by stage: 
 
-    1. [Raw reads processing, mapping and SNP identification](https://github.com/oeco28/Cacao_Genomics/edit/master/README.md)
+    1. [Raw reads processing, mapping and SNP identification](https://github.com/oeco28/Cacao_Genomics/edit/master/README.md "README page")
     
     2. SNP filtering for different analyses
     
