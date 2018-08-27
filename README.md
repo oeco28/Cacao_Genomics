@@ -11,17 +11,17 @@ The Sections of this repository are separated by stage:
     
    3. Population genetic analyses
    
-    1. Genetic diversity analyses
+       1. Genetic diversity analyses
     
-    2. Population Structure
+       2. Population Structure
     
-    3. Population demographics
+       3. Population demographics
     
-    4. Identificaiton of Selective Sweeps associated to domestication
+       4. Identificaiton of Selective Sweeps associated to domestication
     
-    5. Annotation of SNP impact on protein
+       5. Annotation of SNP impact on protein
     
-    6. Cost of domestication analyses
+       6. Cost of domestication analyses
       
 
 Any funrther clarification on the analyses performed, please write to: omar.cornejo@wsu.edu
