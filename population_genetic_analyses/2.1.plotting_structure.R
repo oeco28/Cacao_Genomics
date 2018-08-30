@@ -83,3 +83,35 @@ q + annotate("text", x=-0.12, y=0.001, label="West") + annotate("text", x=0.10, 
 
 lm(formula = -PC2 ~ pi, data = A2)
 
+
+######
+# Plotting map with coordinates of populations
+#####
+
+setwd("/path_to_data/pca")
+library(RColorBrewer)
+library(maps)
+
+map(database="world",regions=c('brazil','ecuador','bolivia','peru','venezuela','guyana','surinam','colombia','panama'),xlim=c(-90,-30),ylim=c(-18,15),col="grey95",fill=TRUE)
+map.axes()
+points(q[which(ids2 == "snow4"),1],q[which(ids2 == "snow4"),2],col="snow4",pch=17)
+points(q[which(ids2 == mypalette[10]),1],q[which(ids2 == mypalette[10]),2],col=mypalette[10],pch=17)
+points(q[which(ids2 == mypalette[2]),1],q[which(ids2 == mypalette[2]),2],col=mypalette[2],pch=17)
+points(q[which(ids2 == mypalette[8]),1],q[which(ids2 == mypalette[8]),2],col=mypalette[8],pch=17)
+points(q[which(ids2 == mypalette[9]),1],q[which(ids2 == mypalette[9]),2],col=mypalette[9],pch=17)
+points(q[which(ids2 == mypalette[6]),1],q[which(ids2 == mypalette[6]),2],col=mypalette[6],pch=17)
+points(q[which(ids2 == mypalette[3]),1],q[which(ids2 == mypalette[3]),2],col=mypalette[3],pch=17)
+points(q[which(ids2 == mypalette[5]),1],q[which(ids2 == mypalette[5]),2],col=mypalette[5],pch=17)
+points(q[which(ids2 == mypalette[1]),1],q[which(ids2 == mypalette[1]),2],col=mypalette[1],pch=17)
+
+poploc <- matrix(NA,8,4)
+poploc[1,] <- c(-80.5,10.32,"Criollo","#9E0142")
+poploc[2,] <- c(-76.88,-1.955,"Curaray","#D53E4F")
+poploc[3,] <- c(-43,-12,"Amelonado","#FEE08B")
+poploc[4,] <- c(-55.71,1.29,"Guianna","#ABDDA4")
+poploc[5,] <- c(-73,-3.5,"Iquitos","#66C2A5")
+poploc[6,] <- c(-75.15,-4.65,"Maranon","#FFFFBF") # #ffefbf #FFFFBF
+poploc[7,] <- c(-75.55,-0.73,"Nanay","#F46D43")
+poploc[8,] <- c(-68.25,-9.20,"Purus","#3288BD")
+
+
