@@ -29,3 +29,12 @@ vcftools --gzvcf cacao.vcf.gz --thin 5000 --maf 0.05 --min-alleles 2 --max-allel
   --max-missing 1 --recode --recode012 cacao.4pca
   
 # PCA analyses were carried out using the cmdscale function in R. See plotting_structure.R
+
+
+Fst estimations were performed in 5Kb windows using vcftools for all pairs of populations
+
+
+vcftools --gzvcf cacao.vcf.gz --thin 5000 --maf 0.05 --min-alleles 2 --max-alleles 2 --remove-indels \
+  --max-missing 1  --keep 4_fsts/pop1_pop2.ids --weir-fst-pop 4_fsts/pop1.ids --weir-fst-pop 4_fsts/pop2.ids 
+  --out 4_fsts/pop1_pop2/cacao_pop1pop2.fst
+  
