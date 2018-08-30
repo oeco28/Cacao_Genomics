@@ -120,4 +120,30 @@ mp <- ggmap(map)
 mp + geom_point(data=q2, aes(x=Long, y=Lat, size=2), color=ids3, size=3, alpha=0.8) + annotate("text", x = -67.5, y = 5.32, label = "Criollo",colour ="#9E0142") + annotate("text", x = -76.88, y = -1.955, label = "Curaray", colour = "#D53E4F") + annotate("text", x = -45, y = -17, label = "Amelonado", colour = "yellow") + annotate("text", x = -55.71, y = 1.29, label = "Guianna", colour = "#ABDDA4") + annotate("text", x = -73, y = -3.5, label = "Iquitos", colour = "#66C2A5") + annotate("text", x = -75.15, y = -4.65, label = "Maranon", colour = "#FFFFBF") + annotate("text", x = -75.55, y = -0.73, label = "Nanay", colour = "#F46D43") + annotate("text", x = -68.25, y = -9.20, label = "Purus", colour = "#3288BD")
 
 
+###############
+## Summarizing Fst Analysis 
+###############
+
+library(ggplot2)
+library(RColorBrewer)
+setwd("/Users/ocornejo/Projects/Cacao/200_genomes/structure/call_all/fsts")
+data4 <- data.frame(read.table("../FINAL/SummaryPairwiseFst.4.out",header=T))
+
+add.alpha <- function(col, alpha=1){
+    if(missing(col))
+    stop("Please provide a vector of colours.")
+    apply(sapply(col, col2rgb)/255, 2,
+    function(x)
+    rgb(x[1], x[2], x[3], alpha=alpha))
+}
+
+mypal <- brewer.pal(10,"Spectral")
+myPalette2 <- colorRampPalette(rev(brewer.pal(9, "RdGy")))
+sc3 <- scale_colour_gradientn(colours = myPalette2(50), limits=c(min(na.omit(data4$Mean_Fst)), max(na.omit(data4$Mean_Fst))), na.value =add.alpha("white",alpha=0.1))
+ggplot(data=data4,aes(x=Id2,y=Id1)) + geom_tile(alpha=0) + ylab("") + xlab("") + theme(axis.text.x= element_text(size = rel(1.4), angle=90)) + theme(axis.text.y= element_text(size = rel(1.4))) + geom_point(aes(colour = Mean_Fst,  size = SE_Fst)) + sc3 + theme_bw()
+          
+
+###########################
+# Plot the  Fst figures along the genome see independent code fst_along_genome.R. 
+###########################
 
