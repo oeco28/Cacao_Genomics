@@ -114,4 +114,10 @@ poploc[6,] <- c(-75.15,-4.65,"Maranon","#FFFFBF") # #ffefbf #FFFFBF
 poploc[7,] <- c(-75.55,-0.73,"Nanay","#F46D43")
 poploc[8,] <- c(-68.25,-9.20,"Purus","#3288BD")
 
+# alternatively  
+
+mp <- ggmap(map)
+mp + geom_point(data=q2, aes(x=Long, y=Lat, size=2), color=ids3, size=3, alpha=0.8) + annotate("text", x = -67.5, y = 5.32, label = "Criollo",colour ="#9E0142") + annotate("text", x = -76.88, y = -1.955, label = "Curaray", colour = "#D53E4F") + annotate("text", x = -45, y = -17, label = "Amelonado", colour = "yellow") + annotate("text", x = -55.71, y = 1.29, label = "Guianna", colour = "#ABDDA4") + annotate("text", x = -73, y = -3.5, label = "Iquitos", colour = "#66C2A5") + annotate("text", x = -75.15, y = -4.65, label = "Maranon", colour = "#FFFFBF") + annotate("text", x = -75.55, y = -0.73, label = "Nanay", colour = "#F46D43") + annotate("text", x = -68.25, y = -9.20, label = "Purus", colour = "#3288BD")
+
+
 
