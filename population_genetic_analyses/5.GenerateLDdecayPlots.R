@@ -1,3 +1,6 @@
+# LD was estimated as D' for all pairs using the --hap-r2 flag in vcftools and filtering out MFA < 0.05
+
+
 library(ggplot2)
 library(RColorBrewer)
 
