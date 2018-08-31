@@ -414,3 +414,34 @@ ggplot(data = Matina, aes(x = log(Time,base=10), y = Ne)) + geom_line(size=1.5,c
 pdf("plot_psmc",width=7.096491,height=3.701754)
 
 dev.off()
+
+
+#######################
+## Plotting SMC++
+########################
+
+library("ggplot2")
+library(RColorBrewer)
+library(purrr)
+library(plyr)
+library(dplyr)
+setwd("/path_to_smc++_results/")
+
+temp <- list.files(pattern="*.csv")
+
+list_dataframes <- llply(temp, read.csv, header = T)
+dimensions <- ldply(list_dataframes, dim)
+
+list_dataframes2 <- bind_rows(list_dataframes)
+colnames(list_dataframes2) <- c("Population",colnames(list_dataframes2)[2:5])
+list_dataframes2$Population <- factor(list_dataframes2$Population,levels=c("Amelonado","Contamana","Criollo","Curaray","Guianna","Iquitos","Maranon","Nacional","Nanay","Purus"))
+
+mypal <- brewer.pal(10,"Spectral")
+
+write.table(list_dataframes2[,1:3],file="datos_concatenados.tab",quote=FALSE,row.names=FALSE,col.names=TRUE)
+
+
+ggplot(data=data, aes(x=x,y=y, group="Population")) + geom_line(aes(colour="Population"),size= 1.5) + xlab("Time (years)") + ylab("Effective Population size") + scale_y_log10(breaks=c(1000, 10000), labels=c(expression(10^3),expression(10^4))) + scale_x_log10(breaks=c(1000, 10000), labels=c(expression(10^3),expression(10^4))) + scale_colour_manual(values=c(mypal[5],mypal[4],mypal[1],mypal[2],mypal[8],mypal[9],mypal[6],mypal[7],mypal[3],mypal[10]))
+
+
+
