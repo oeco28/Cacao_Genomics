@@ -1,0 +1,357 @@
+# although not all the analyses in all populations were included in this manuscript
+#  we have performed analyses of accumulation of deleterious variants that we are currently exploring for an additional publication 
+# some of the scripts are here as an example and we expect the community to respect authorship on this
+
+args<-commandArgs(TRUE)
+chrom=args[[1]]
+library(plyr)
+admixed <- data.frame(read.table("Admixed.frq",header=TRUE))
+amelonado <- data.frame(read.table("Amelonado.frq",header=TRUE))
+contamana <- data.frame(read.table("Contamana.frq",header=TRUE))
+criollo <- data.frame(read.table("Criollo.frq",header=TRUE))
+curaray <- data.frame(read.table("Curaray.frq",header=TRUE))
+guianna <- data.frame(read.table("Guianna.frq",header=TRUE))
+iquitos <- data.frame(read.table("Iquitos.frq",header=TRUE))
+maranon <- data.frame(read.table("Maranon.frq",header=TRUE))
+nacional <- data.frame(read.table("Nacional.frq",header=TRUE))
+nanay <- data.frame(read.table("Nanay.frq",header=TRUE))
+purus <- data.frame(read.table("Purus.frq",header=TRUE))
+
+snps <- data.frame(read.table(paste("Annotations_",chrom,".tab",sep=""),header=FALSE));
+colnames(snps) <- c("CHROM","POS","Gene","NS","AA_change","AA_position","score_1","score_2","Type_change")
+tot_counts <- matrix(NA,11,2)
+tot_counts[,2] <- c("Admixed","Amelonado","Contamana","Criollo","Curaray","Guianna","Iquitos","Maranon","Nacional","Nanay","Purus")
+
+admixed_aa <- join(admixed,snps,by="POS",type="inner")
+admixed_aat <- data.frame(table(cut(admixed_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),admixed_aa$Type_change))
+admixed_aat <- cbind(admixed_aat[which(admixed_aat[,2] == "DELETERIOUS" | admixed_aat[,2] == "TOLERATED"),],rep("Admixed",12))
+colnames(admixed_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[1,1] <- dim(admixed_aa)[1]
+
+amelonado_aa <- join(amelonado,snps,by="POS",type="inner")
+amelonado_aat <- data.frame(table(cut(amelonado_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),amelonado_aa$Type_change))
+amelonado_aat <- cbind(amelonado_aat[which(amelonado_aat[,2] == "DELETERIOUS" | amelonado_aat[,2] == "TOLERATED"),],rep("Amelonado",12))
+colnames(amelonado_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[2,1] <- dim(amelonado_aa)[1]
+
+contamana_aa <- join(contamana,snps,by="POS",type="inner")
+contamana_aat <- data.frame(table(cut(contamana_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),contamana_aa$Type_change))
+contamana_aat <- cbind(contamana_aat[which(contamana_aat[,2] == "DELETERIOUS" | contamana_aat[,2] == "TOLERATED"),],rep("Contamana",12))
+colnames(contamana_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[3,1] <- dim(contamana_aa)[1]
+
+criollo_aa <- join(criollo,snps,by="POS",type="inner")
+criollo_aat <- data.frame(table(cut(criollo_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),criollo_aa$Type_change))
+criollo_aat <- cbind(criollo_aat[which(criollo_aat[,2] == "DELETERIOUS" | criollo_aat[,2] == "TOLERATED"),],rep("Criollo",12))
+colnames(criollo_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[4,1] <- dim(criollo_aa)[1]
+
+curaray_aa <- join(curaray,snps,by="POS",type="inner")
+curaray_aat <- data.frame(table(cut(curaray_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),curaray_aa$Type_change))
+curaray_aat <- cbind(curaray_aat[which(curaray_aat[,2] == "DELETERIOUS" | curaray_aat[,2] == "TOLERATED"),],rep("Curaray",12))
+colnames(curaray_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[5,1] <- dim(curaray_aa)[1]
+
+guianna_aa <- join(guianna,snps,by="POS",type="inner")
+guianna_aat <- data.frame(table(cut(guianna_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),guianna_aa$Type_change))
+guianna_aat <- cbind(guianna_aat[which(guianna_aat[,2] == "DELETERIOUS" | guianna_aat[,2] == "TOLERATED"),],rep("Guianna",12))
+colnames(guianna_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[6,1] <- dim(guianna_aa)[1]
+
+iquitos_aa <- join(iquitos,snps,by="POS",type="inner")
+iquitos_aat <- data.frame(table(cut(iquitos_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),iquitos_aa$Type_change))
+iquitos_aat <- cbind(iquitos_aat[which(iquitos_aat[,2] == "DELETERIOUS" | iquitos_aat[,2] == "TOLERATED"),],rep("Iquitos",12))
+colnames(iquitos_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[7,1] <- dim(iquitos_aa)[1]
+
+maranon_aa <- join(maranon,snps,by="POS",type="inner")
+maranon_aat <- data.frame(table(cut(maranon_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),maranon_aa$Type_change))
+maranon_aat <- cbind(maranon_aat[which(maranon_aat[,2] == "DELETERIOUS" | maranon_aat[,2] == "TOLERATED"),],rep("Maranon",12))
+colnames(maranon_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[8,1] <- dim(maranon_aa)[1]
+
+nacional_aa <- join(nacional,snps,by="POS",type="inner")
+nacional_aat <- data.frame(table(cut(nacional_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),nacional_aa$Type_change))
+nacional_aat <- cbind(nacional_aat[which(nacional_aat[,2] == "DELETERIOUS" | nacional_aat[,2] == "TOLERATED"),],rep("Nacional",12))
+colnames(nacional_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[9,1] <- dim(nacional_aa)[1]
+
+nanay_aa <- join(nanay,snps,by="POS",type="inner")
+nanay_aat <- data.frame(table(cut(nanay_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),nanay_aa$Type_change))
+nanay_aat <- cbind(nanay_aat[which(nanay_aat[,2] == "DELETERIOUS" | nanay_aat[,2] == "TOLERATED"),],rep("Nanay",12))
+colnames(nanay_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[10,1] <- dim(nanay_aa)[1]
+
+purus_aa <- join(purus,snps,by="POS",type="inner")
+purus_aat <- data.frame(table(cut(purus_aa$FREQ_ALT, c(0,0.25,0.375,0.5,0.625,0.75,1)),purus_aa$Type_change))
+purus_aat <- cbind(purus_aat[which(purus_aat[,2] == "DELETERIOUS" | purus_aat[,2] == "TOLERATED"),],rep("Purus",12))
+colnames(purus_aat) <- c("freq_class","Impact","Counts","Population")
+tot_counts[11,1] <- dim(purus_aa)[1]
+
+impact_data <- rbind(admixed_aat,amelonado_aat,contamana_aat,criollo_aat,curaray_aat,guianna_aat,iquitos_aat,maranon_aat,nacional_aat,nanay_aat,purus_aat)
+
+colnames(tot_counts) <- c("counts","population")
+write.table(impact_data,file=paste("chrom_",chrom,".impact.tab",sep=""),quote=FALSE,row.names=FALSE,col.names=TRUE)
+write.table(tot_counts,file=paste("chrom.",chrom,".total_counts.tab",sep=""),quote=FALSE,row.names=FALSE,col.names=TRUE)
+
+######################################
+## To summarize
+######################################
+
+library(ggplot2)
+library(vcd)
+setwd("/Users/oeco/Projects/Cacao/200_genomes/Selection/Sift/")
+data_f <- c()
+data1 <- data.frame(read.table("chrom.1.impact.tab",header=TRUE))
+counts1 <- data.frame(read.table("chrom.1.total_counts.tab",header=TRUE))
+data2 <- data.frame(read.table("chrom.2.impact.tab",header=TRUE))
+counts2 <- data.frame(read.table("chrom.2.total_counts.tab",header=TRUE))
+data3 <- data.frame(read.table("chrom.3.impact.tab",header=TRUE))
+counts3 <- data.frame(read.table("chrom.3.total_counts.tab",header=TRUE))
+data4 <- data.frame(read.table("chrom.4.impact.tab",header=TRUE))
+counts4 <- data.frame(read.table("chrom.4.total_counts.tab",header=TRUE))
+data5 <- data.frame(read.table("chrom.5.impact.tab",header=TRUE))
+counts5 <- data.frame(read.table("chrom.5.total_counts.tab",header=TRUE))
+data6 <- data.frame(read.table("chrom.6.impact.tab",header=TRUE))
+counts6 <- data.frame(read.table("chrom.6.total_counts.tab",header=TRUE))
+data7 <- data.frame(read.table("chrom.7.impact.tab",header=TRUE))
+counts7 <- data.frame(read.table("chrom.7.total_counts.tab",header=TRUE))
+data8 <- data.frame(read.table("chrom.8.impact.tab",header=TRUE))
+counts8 <- data.frame(read.table("chrom.8.total_counts.tab",header=TRUE))
+data9 <- data.frame(read.table("chrom.9.impact.tab",header=TRUE))
+counts9 <- data.frame(read.table("chrom.9.total_counts.tab",header=TRUE))
+#data10 <- data.frame(read.table("chrom.10.impact.tab",header=TRUE))
+#counts10 <- data.frame(read.table("chrom.10.total_counts.tab",header=TRUE))
+
+
+final <- data1[,]
+temp <- cbind(data1[,3],data2[,3],data3[,3],data4[,3],data5[,3],data6[,3],data7[,3],data8[,3],data9[,3])
+final[,3] <- apply(temp,1,sum)
+
+normalizar_temp <- cbind(counts1[,1],counts2[,1],counts3[,1],counts4[,1],counts5[,1],counts6[,1],counts7[,1],counts8[,1],counts9[,1])
+normalizarF <- apply(normalizar_temp,1,sum)
+
+normalizarF <- cbind(normalizarF,counts9$population)
+colnames(normalizarF) <- c("counts","Population")
+
+final2 <- final[c(1:3,7:9,13:15,19:21,25:27,31:33,37:39,43:45,49:51,55:57,61:63,67:69,73:75,79:81,85:87,91:93,97:99,103:105,109:111,115:117,121:123,127:129),]
+final2$Counts[1] <- final2$Counts[1] + final$Counts[6]
+final2$Counts[2] <- final2$Counts[2] + final$Counts[5]
+final2$Counts[3] <- final2$Counts[3] + final$Counts[4]
+final2$Counts[4] <- final2$Counts[4] + final$Counts[12]
+final2$Counts[5] <- final2$Counts[5] + final$Counts[11]
+final2$Counts[6] <- final2$Counts[6] + final$Counts[10]
+final2$Counts[7] <- final2$Counts[7] + final$Counts[18]
+final2$Counts[8] <- final2$Counts[8] + final$Counts[17]
+final2$Counts[9] <- final2$Counts[9] + final$Counts[16]
+final2$Counts[10] <- final2$Counts[10] + final$Counts[24]
+final2$Counts[11] <- final2$Counts[11] + final$Counts[23]
+final2$Counts[12] <- final2$Counts[12] + final$Counts[22]
+final2$Counts[13] <- final2$Counts[13] + final$Counts[30]
+final2$Counts[14] <- final2$Counts[14] + final$Counts[29]
+final2$Counts[15] <- final2$Counts[15] + final$Counts[28]
+final2$Counts[16] <- final2$Counts[16] + final$Counts[36]
+final2$Counts[17] <- final2$Counts[17] + final$Counts[35]
+final2$Counts[18] <- final2$Counts[18] + final$Counts[34]
+final2$Counts[19] <- final2$Counts[19] + final$Counts[42]
+final2$Counts[20] <- final2$Counts[20] + final$Counts[41]
+final2$Counts[21] <- final2$Counts[21] + final$Counts[40]
+final2$Counts[22] <- final2$Counts[22] + final$Counts[48]
+final2$Counts[23] <- final2$Counts[23] + final$Counts[47]
+final2$Counts[24] <- final2$Counts[24] + final$Counts[46]
+final2$Counts[25] <- final2$Counts[25] + final$Counts[54]
+final2$Counts[26] <- final2$Counts[26] + final$Counts[53]
+final2$Counts[27] <- final2$Counts[27] + final$Counts[52]
+final2$Counts[28] <- final2$Counts[28] + final$Counts[60]
+final2$Counts[29] <- final2$Counts[29] + final$Counts[59]
+final2$Counts[30] <- final2$Counts[30] + final$Counts[58]
+final2$Counts[31] <- final2$Counts[31] + final$Counts[66]
+final2$Counts[32] <- final2$Counts[32] + final$Counts[65]
+final2$Counts[33] <- final2$Counts[33] + final$Counts[64]
+final2$Counts[34] <- final2$Counts[34] + final$Counts[72]
+final2$Counts[35] <- final2$Counts[35] + final$Counts[71]
+final2$Counts[36] <- final2$Counts[36] + final$Counts[70]
+final2$Counts[37] <- final2$Counts[37] + final$Counts[78]
+final2$Counts[38] <- final2$Counts[38] + final$Counts[77]
+final2$Counts[39] <- final2$Counts[39] + final$Counts[76]
+final2$Counts[40] <- final2$Counts[40] + final$Counts[84]
+final2$Counts[41] <- final2$Counts[41] + final$Counts[83]
+final2$Counts[42] <- final2$Counts[42] + final$Counts[82]
+final2$Counts[43] <- final2$Counts[43] + final$Counts[90]
+final2$Counts[44] <- final2$Counts[44] + final$Counts[89]
+final2$Counts[45] <- final2$Counts[45] + final$Counts[88]
+final2$Counts[46] <- final2$Counts[46] + final$Counts[96]
+final2$Counts[47] <- final2$Counts[47] + final$Counts[95]
+final2$Counts[48] <- final2$Counts[48] + final$Counts[94]
+final2$Counts[49] <- final2$Counts[49] + final$Counts[102]
+final2$Counts[50] <- final2$Counts[50] + final$Counts[101]
+final2$Counts[51] <- final2$Counts[51] + final$Counts[100]
+final2$Counts[52] <- final2$Counts[52] + final$Counts[108]
+final2$Counts[53] <- final2$Counts[53] + final$Counts[107]
+final2$Counts[54] <- final2$Counts[54] + final$Counts[106]
+final2$Counts[55] <- final2$Counts[55] + final$Counts[114]
+final2$Counts[56] <- final2$Counts[56] + final$Counts[113]
+final2$Counts[57] <- final2$Counts[57] + final$Counts[112]
+final2$Counts[58] <- final2$Counts[58] + final$Counts[120]
+final2$Counts[59] <- final2$Counts[59] + final$Counts[119]
+final2$Counts[60] <- final2$Counts[60] + final$Counts[118]
+final2$Counts[61] <- final2$Counts[61] + final$Counts[126]
+final2$Counts[62] <- final2$Counts[62] + final$Counts[125]
+final2$Counts[63] <- final2$Counts[63] + final$Counts[124]
+final2$Counts[64] <- final2$Counts[64] + final$Counts[132]
+final2$Counts[65] <- final2$Counts[65] + final$Counts[131]
+final2$Counts[66] <- final2$Counts[66] + final$Counts[130]
+
+myfreq <- matrix(NA,132/2,2)
+for(i in 1:6){myfreq[i,1] <- final2[i,3]/normalizarF[1,1]}
+for(i in 1:6){myfreq[i,2] <- final2[i,3]/sum(final[c(1:12),3])}
+
+for(i in 7:12){myfreq[i,1] <- final2[i,3]/normalizarF[2,1]}
+for(i in 7:12){myfreq[i,2] <- final2[i,3]/sum(final[c(13:24),3])}
+
+for(i in 13:18){myfreq[i,1] <- final2[i,3]/normalizarF[3,1]}
+for(i in 13:18){myfreq[i,2] <- final2[i,3]/sum(final[c(25:36),3])}
+
+for(i in 19:24){myfreq[i,1] <- final2[i,3]/normalizarF[4,1]}
+for(i in 19:24){myfreq[i,2] <- final2[i,3]/sum(final[c(37:48),3])}
+
+for(i in 25:30){myfreq[i,1] <- final2[i,3]/normalizarF[5,1]}
+for(i in 25:30){myfreq[i,2] <- final2[i,3]/sum(final[c(49:60),3])}
+
+for(i in 31:36){myfreq[i,1] <- final2[i,3]/normalizarF[6,1]}
+for(i in 31:36){myfreq[i,2] <- final2[i,3]/sum(final[c(61:72),3])}
+
+for(i in 37:42){myfreq[i,1] <- final2[i,3]/normalizarF[7,1]}
+for(i in 37:42){myfreq[i,2] <- final2[i,3]/sum(final[c(73:84),3])}
+
+for(i in 43:48){myfreq[i,1] <- final2[i,3]/normalizarF[8,1]}
+for(i in 43:48){myfreq[i,2] <- final2[i,3]/sum(final[c(85:96),3])}
+
+for(i in 49:54){myfreq[i,1] <- final2[i,3]/normalizarF[9,1]}
+for(i in 49:54){myfreq[i,2] <- final2[i,3]/sum(final[c(97:108),3])}
+
+for(i in 55:60){myfreq[i,1] <- final2[i,3]/normalizarF[10,1]}
+for(i in 55:60){myfreq[i,2] <- final2[i,3]/sum(final[c(109:120),3])}
+
+for(i in 61:66){myfreq[i,1] <- final2[i,3]/normalizarF[11,1]}
+for(i in 61:66){myfreq[i,2] <- final2[i,3]/sum(final[c(121:132),3])}
+
+final2 <- cbind(final2,myfreq)
+colnames(final2) <- c(colnames(final2[1:4]),"Freq1","Freq2")
+
+ggplot(final2,aes(freq_class,Freq2)) + geom_bar(aes(fill=Impact),stat="identity") + facet_wrap(~ Population) + scale_fill_manual(values=c("gold3","blue4")) + theme(axis.text.x= element_text(size = rel(1.1), angle=45, hjust = 1, vjust = 1)) + ylab("Frequency") + xlab("MAF bins")
+
+final_mosaic <- final2[which(final2$Population == "Amelonado" | final2$Population == "Criollo"),1:4]
+final_mosaic$Population <- factor(final_mosaic$Population, levels=c("Amelonado","Criollo"))
+final_mosaic <- final_mosaic[c(4:6,1:3,10:12,7:9),]
+final_mosaic$freq_class <- factor(final_mosaic$freq_class, levels=c("(0,0.25]","(0.25,0.375]","(0.375,0.5]"))
+
+mod0 <- glm(Counts ~ Impact + Population + freq_class, data=final_mosaic, family=poisson())
+mod1 <- glm(Counts ~ Impact * Population + freq_class, data=final_mosaic, family=poisson())
+mod2 <- glm(Counts ~ (Impact + Population) * freq_class, data=final_mosaic, family=poisson())
+mod3 <- glm(Counts ~ Impact*Population*freq_class, data=final_mosaic, family=poisson())
+mod4 <- glm(Counts ~ (Impact + freq_class) * Population, data=final_mosaic, family=poisson())
+
+summary(mod0)
+summary(mod1)
+summary(mod2)
+summary(mod3)
+summary(mod4)
+
+write.table(final_mosaic,file="final_mosaic",quote=FALSE,col.names=TRUE,row.names=FALSE)
+final_mosaic2 <- data.frame(read.table("final_mosaic",header=TRUE))
+
+Data.xtabs = xtabs(Counts ~ Population + Impact + freq_class,data=final_mosaic2)
+
+
+final3 <- final2[which(final2$Population == "Amelonado" |final2$Population == "Criollo"),]
+ggplot(final3,aes(freq_class,Freq2)) + geom_bar(aes(fill=Impact),stat="identity") + facet_wrap(~ Population) + scale_fill_manual(values=c("gold3","blue4")) + theme(axis.text.x= element_text(size = rel(1.1), angle=45, hjust = 1, vjust = 1)) + ylab("Frequency") + xlab("MAF bins")
+
+#########################
+# Annoying thing
+#########################
+
+library(vcd)
+molten_mosaic <- c()
+temp1 <- rep(as.character(final_mosaic[1,1]), 20429)
+temp2 <- rep(as.character(final_mosaic[1,2]), 20429)
+temp3 <- rep(as.character(final_mosaic[1,4]), 20429)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[2,1]), 2170)
+temp2 <- rep(as.character(final_mosaic[2,2]), 2170)
+temp3 <- rep(as.character(final_mosaic[2,4]), 2170)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[3,1]), 1587)
+temp2 <- rep(as.character(final_mosaic[3,2]), 1587)
+temp3 <- rep(as.character(final_mosaic[3,4]), 1587)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[4,1]), 5501)
+temp2 <- rep(as.character(final_mosaic[4,2]), 5501)
+temp3 <- rep(as.character(final_mosaic[4,4]), 5501)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[5,1]), 502)
+temp2 <- rep(as.character(final_mosaic[5,2]), 502)
+temp3 <- rep(as.character(final_mosaic[5,4]), 502)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[6,1]), 306)
+temp2 <- rep(as.character(final_mosaic[6,2]), 306)
+temp3 <- rep(as.character(final_mosaic[6,4]), 306)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[7,1]), 3131)
+temp2 <- rep(as.character(final_mosaic[7,2]), 3131)
+temp3 <- rep(as.character(final_mosaic[7,4]), 3131)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[8,1]), 1418)
+temp2 <- rep(as.character(final_mosaic[8,2]), 1418)
+temp3 <- rep(as.character(final_mosaic[8,4]), 1418)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[9,1]), 1897)
+temp2 <- rep(as.character(final_mosaic[9,2]), 1897)
+temp3 <- rep(as.character(final_mosaic[9,4]), 1897)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[10,1]), 1292)
+temp2 <- rep(as.character(final_mosaic[10,2]), 1292)
+temp3 <- rep(as.character(final_mosaic[10,4]), 1292)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[11,1]), 517)
+temp2 <- rep(as.character(final_mosaic[11,2]), 517)
+temp3 <- rep(as.character(final_mosaic[11,4]), 517)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+temp1 <- rep(as.character(final_mosaic[12,1]), 733)
+temp2 <- rep(as.character(final_mosaic[12,2]), 733)
+temp3 <- rep(as.character(final_mosaic[12,4]), 733)
+temp <- cbind(temp1,temp2,temp3)
+molten_mosaic <- rbind(molten_mosaic,temp)
+
+colnames(molten_mosaic) <- c("freq_class","Impact","Population")
+molten_mosaic <- data.frame(molten_mosaic)
+molten_mosaic <- molten_mosaic[,c(2,1,3)]
+#mytable <- structable(molten_mosaic)
+
+mosaic(structable((Impact + Population) * freq_class,data=molten_mosaic),shade=TRUE,legend=TRUE)
+#mosaic(mytable,shade=TRUE,legend=TRUE)
+
+fill_colors <- matrix(c("#A000B2", "#56B200", "#EE5BFF","#83B244"), ncol = 2)
+cotabplot(~ Impact + Population| freq_class, data=Data.xtabs, split_vertical = TRUE, shading=TRUE,gp= gpar(fill=fill_colors, col = 0))
